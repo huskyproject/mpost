@@ -763,6 +763,10 @@ static void  BuildTear (char *s)
 }
 
 
+char *const Months[12] = { "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+                           "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
+
+
 /*
 ** BuildHdr ()
 ** Set message header information
@@ -793,6 +797,15 @@ static void  BuildHdr (XMSG *x, int num, int maxnum)
 
     tmdate=localtime(&time_now);
     x->date_written=x->date_arrived=(TmDate_to_DosDate(tmdate,&combo))->msg_st;
+
+    sprintf((char *) x->__ftsc_date,
+            "%02d %s %02d  %02d:%02d:%02d",
+            x->date_written.date.da,
+            Months[x->date_written.date.mo - 1],
+            (x->date_written.date.yr + 80) % 100,
+            x->date_written.time.hh,
+            x->date_written.time.mm,
+            x->date_written.time.ss << 1);
 }
 
 
@@ -806,8 +819,6 @@ static void  BuildCtrl (char *str, int *len, int num, int maxnum)
     struct tm *t;
     unsigned long time_new;
     char ubuf[20], sbuf[80];
-    char *const Months[12] = { "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                               "Jul", "Aug", "Sep", "Oct", "Nov", "Dec" };
 
     *len=0;
     time_new=HsecTime(); if(seed<time_new) seed=time_new;
