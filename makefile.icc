@@ -1,8 +1,0 @@
-LISTOPT=-Fl -Ls -Le
-DOPT=-Ti -Si -Fi -B" /de"
-COPT=-Gs+ -G4 -Op+ -Si -Fi -DOS2
-#COPT=-Sp1 -W2 -Q -DOS2
-CC  =icc -q $(COPT) -i"..\smapi" ..\smapi\smapiibo.lib
-
-mpostp.exe: mpostp.c
-	$(CC) mpostp.c

@@ -1,0 +1,30 @@
+# include Husky-Makefile-Config
+include ..\huskymak.cfg
+
+LISTOPT=-Fl -Ls -Le
+DOPT=-Ti -Si -Fi -B" /de"
+
+ifeq ($(DEBUG), 1)
+  COPT=-q -Gs+ -G4 -Op+ -Si -Fi -DOS2 -i"$(INCDIR)"
+else
+  COPT=-q -Gs+ -G4 -Op+ -Si -Fi -DOS2
+endif
+#COPT=-Sp1 -W2 -Q -DOS2
+
+CC  = icc
+
+all: mpostp.exe
+
+mpostp.exe: mpostp.c
+	$(CC) $(COPT) mpostp.c $(LIBDIR)\smapiibo.lib
+
+clean:
+	del *.obj
+	del *.bak
+
+distclean: clean
+	del *.exe
+
+install: mpostp.exe
+	copy mpostp.exe $(BINDIR)
+

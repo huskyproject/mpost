@@ -1,8 +1,0 @@
-
-SMAPIDIR=../smapi
-SMAPI=smapidjg
-
-CC  =gcc -I$(SMAPIDIR)
-
-mpost32.exe: mpostp.c
-	$(CC) -s -o mpost32.exe mpostp.c $(SMAPIDIR)/$(SMAPI).a

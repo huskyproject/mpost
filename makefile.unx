@@ -1,9 +1,0 @@
-
-SMAPIDIR=../smapi
-SMAPI=smapiunix
-
-CC  =cc
-COPT= -I$(SMAPIDIR) -DUNIX
-
-mpostp: mpostp.c
-	$(CC) $(COPT) -s -o mpost mpostp.c -L$(SMAPIDIR) -l$(SMAPI)
