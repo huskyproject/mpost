@@ -1,9 +1,29 @@
+# include Husky-Makefile-Config
+include ../huskymak.cfg
 
-SMAPIDIR=../smapi
 SMAPI=smapilnx
 
 CC  =gcc
-COPT= -I$(SMAPIDIR) -DUNIX
 
-mpostp: mpostp.c
-	$(CC) $(COPT) -s -o mpost mpostp.c -L$(SMAPIDIR) -l$(SMAPI)
+ifeq ($(DEBUG), 1)
+  COPT= -I$(INCDIR) -DUNIX -ggdb
+else
+  COPT= -I$(INCDIR) -DUNIX -s
+endif
+
+LOPT= -L$(LIBDIR)
+
+all: mpost
+
+mpost: mpostp.c
+	$(CC) $(COPT) $(LOPT) -o mpost mpostp.c -l$(SMAPI)
+
+clean:
+	-rm *.o *~ core
+
+distclean: clean
+	-rm mpost
+
+install: mpost
+	install $(IBOPT) mpost $(BINDIR)
+

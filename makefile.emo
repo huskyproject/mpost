@@ -1,8 +1,28 @@
+# include Husky-Makefile-Config
+include ../huskymak.cfg
 
-SMAPIDIR=../smapi
 SMAPI=smapiemo
 
-CC  =gcc -I$(SMAPIDIR) -DOS2 -Zomf -Zsys
+CC  = gcc
+
+ifeq ($(DEBUG), 1)
+  COPT = -I$(INCDIR) -DOS2 -Zomf -Zsys -g
+else
+  COPT = -I$(INCDIR) -DOS2 -Zomf -Zsys -s
+endif
+
+all: mpostp.exe
 
 mpostp.exe: mpostp.c
-	$(CC) mpostp.c -L$(SMAPIDIR) -l$(SMAPI)
+	$(CC) mpostp.c -L$(LIBDIR) -l$(SMAPI)
+
+clean:
+	-del *.obj
+	-del *.bak
+
+distclean: clean
+	-del *.exe
+
+install: mpostp.exe
+	copy mpostp.exe $(BINDIR)
+
