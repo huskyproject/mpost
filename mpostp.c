@@ -110,7 +110,7 @@
 #undef EXPENTRY
 #endif
 
-#if defined(UNIX) || defined(__DJGPP__) || defined(__MINGW32__)
+#if defined(UNIX) || defined(__DJGPP__)
 #define _MAX_DRIVE FILENAME_MAX
 #define _MAX_DIR FILENAME_MAX
 #define _MAX_FNAME FILENAME_MAX
@@ -216,8 +216,8 @@ static void  Quit (int status);
 static int  ReadCfg (void);
 static int  ReadTxt (void);
 static int  SetMsgCfg (char *s);
-static int  Process (MSG *ap);
-static void  WriteMsg (MSG *ap);
+static int  Process (MSGA *ap);
+static void  WriteMsg (MSGA *ap);
 static int  GetNum (int splitbytes);
 static int  BuildText (int limit);
 static void  SetAttr (char *p);
@@ -250,7 +250,7 @@ int main (int argc, char *argv[])
     int status=0;               /* Exit status                  */
     int areatyp;                /* Message area type            */
     struct _minf mi;            /* API structure                */
-    MSG *ap;                    /* API area pointer             */
+    MSGA *ap;                   /* API area pointer             */
 
     
     printf("\nMPost/"UNAME" v" VERSION " - the Fidonet/Squish/Jam Message Base Writer"
@@ -547,7 +547,7 @@ static int  SetMsgCfg (char *s)
 ** Write out the messages
 */
 
-static int  Process (MSG *ap)
+static int  Process (MSGA *ap)
 {
     int i=0, oldmsgtyp;
     FILE *fp;
@@ -587,7 +587,7 @@ static int  Process (MSG *ap)
 ** Write message(s)
 */
 
-static void  WriteMsg (MSG *ap)
+static void  WriteMsg (MSGA *ap)
 {
     int i;
     int split_num=1;                /* How many msgs        */
