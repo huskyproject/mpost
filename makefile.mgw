@@ -5,7 +5,7 @@
 TARGET=mpostnt.exe
 
 CC=$(CROSS)gcc 
-COPT=-D__NT__ -D__MINGW32__ -O2
+COPT=-D__NT__ -O2
 
 default: $(TARGET)
 
@@ -13,7 +13,7 @@ clean:
 	-rm mpostp.o
 
 distclean: clean
-	-rm mpostnt.exe
+	-rm $(TARGET)
 
 $(TARGET): mpostp.c
 	$(CC) $(COPT) -I.. -o $(TARGET) mpostp.c ../smapi/libsmapimgw.a
