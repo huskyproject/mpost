@@ -1,8 +1,11 @@
+# You can set CROSS=i386-go32- if you are using the djgpp cross compiler
+# edition
 
 SMAPIDIR=../smapi
 SMAPI=smapidjg
 
-CC  =gcc -I$(SMAPIDIR) -O2
+CC  =$(CROSS)gcc -I.. -O2
 
 mpost32.exe: mpostp.c
 	$(CC) -s -o mpost32.exe mpostp.c $(SMAPIDIR)/$(SMAPI).a
+

@@ -1,10 +1,10 @@
 # the mingw compiler for windows 32
-# as crossprefix, use i386-mingw32- for the crtdll.dll crosscompiler,
+# as CROSS prefix, use i386-mingw32- for the crtdll.dll crosscompiler,
 # i386-mingwmsvc- for the mcvcrt.dll crosscompiler, etc.
 
 TARGET=mpostnt.exe
 
-CC=$(CROSSPREFIX)gcc 
+CC=$(CROSS)gcc 
 COPT=-D__NT__ -D__MINGW32__ -O2
 
 default: $(TARGET)

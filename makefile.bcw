@@ -16,5 +16,3 @@ distclean: clean
 
 $(TARGET): mpostp.c
 	$(CC) $(COPT) -I$(SMAPIDIR) -I.. -e$(TARGET) mpostp.c ../smapi/smapibcw.lib
-
-
