@@ -1,9 +1,10 @@
 
-SMAPIDIR=../smapi
+INCDIR=/usr/local/include
+LIBDIR=/usr/local/lib
 SMAPI=smapiunix
 
 CC  =cc
-COPT= -I$(SMAPIDIR) -DUNIX
+COPT= -I$(INCDIR) -DUNIX
 
 mpostp: mpostp.c
-	$(CC) $(COPT) -s -o mpost mpostp.c -L$(SMAPIDIR) -l$(SMAPI)
+	$(CC) $(COPT) -s -o mpost mpostp.c -L$(LIBDIR) -l$(SMAPI)
