@@ -8,13 +8,17 @@ the comfort of Windows and DOS users.
 0. What's new in this version
 -----------------------------
 
-Mpost 1.21 is 100% identical to Mpost 1.20, except for the fact that it has
+Mpost 1.21 is identical to Mpost 1.20, except for the fact that it has
 been linked against a Y2K safe version of the message API, while the one
 that had been used for 1.20 turned out to be not Y2K safe.
 
 There is no NT/alpha executable any more, because I don't have any NT
 installation on DEC Alpha any more. If you need MPost on NT/alpha, please
 contact me and we will find a solution.
+
+Also, the buffer size for a message line has been raised from 256 characters
+to 4096 characters, allowing you to post in a paragraph-oriented way instead
+of line-oriented.
 
 1. About MsgPost and the current status
 ---------------------------------------
@@ -168,9 +172,10 @@ on UNIX and DOS because of this problem.
 5. Hints on compiling Mpost
 ---------------------------
 
-Compiling Mpost requires the SMAPI source code. You can get it from
-www.tichy.de, ftp://ftp.sar-gmbh.com/pub/freeware/husky, or by requesting
-the magic SMAPI from 2:2432/645 or 2:2476/418. Place the smapi and Mpost in
+Compiling Mpost requires the SMAPI source code, revision 1.6.1 (15-Dec-99)
+or newer. You can get it from www.tichy.de, 
+ftp://ftp.sar-gmbh.com/pub/freeware/husky, or by requesting the magic
+SMAPI from 2:2432/645 or 2:2476/418. Place the smapi and Mpost in
 separate subdirectories at the same level, i.E. to c:\source\smapi and
 c:\source\mpost, respectively. Then compile a SMAPI for your operating
 system. If you have problems, the Msged TE manual contains exhaustive

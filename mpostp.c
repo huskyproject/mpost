@@ -1,6 +1,6 @@
 /*****************************************************************************
  +===========================================================================+
- | MsgPost/2 Version 1.20 TE, Jun 1999       (C) 1992 by CodeLand Australia, |
+ | MsgPost/2 Version 1.21 TE, Dec 1999       (C) 1992 by CodeLand Australia, |
  |                                                      All Rights Reserved. |
  | Written by Colin Wheat of Fidonet 3:690/613                               |
  | Compiled using C SET/2                                                    |
@@ -136,8 +136,8 @@
 #endif
 #endif
 
-#define VERSION     "1.20 TE"     /* MsgPost version   */
-#define SVERSON     "1.2"       /* Short version     */
+#define VERSION     "1.21 TE"   /* MsgPost version   */
+#define SVERSON     "1.21"      /* Short version     */
 #define MAX_BLOCK   16000       /* Maximum text size */
 #define MAX_LINE    10000       /* Maximum lines     */
 
@@ -321,10 +321,10 @@ static void  Quit (int status)
 static int  ReadCfg (void)
 {
     FILE *fp;
-    char line[258];
+    char line[4098];
 
     if((fp=ShFopen(cfgpath,"r"))==NULL) return 0;
-    while(fgets(line,256,fp)!=NULL) SetMsgCfg(line);
+    while(fgets(line,4096,fp)!=NULL) SetMsgCfg(line);
     fclose(fp);
 
     return 1;
@@ -341,7 +341,7 @@ static int  ReadTxt (void)
     int llen, checkcfg=1, trimleading=1;
     FILE *fp;
     char *fbuf=NULL;
-    char line[258];
+    char line[4098];
 
     if(!*txtpath) { /* Allow for a blank msg */
         lines[linescount]=strdup("");
@@ -355,7 +355,7 @@ static int  ReadTxt (void)
     fbuf=(char *)malloc(4096); /* Get extended file buffer */
     if(fbuf!=NULL) setvbuf(fp,fbuf,_IOFBF,4096);
 
-    while(fgets(line,256,fp)!=NULL) {
+    while(fgets(line,4096,fp)!=NULL) {
 
         if(checkcfg) { /* Check for override configuration */
             switch (SetMsgCfg(line))
@@ -409,7 +409,7 @@ static int  ReadTxt (void)
 
 static int  SetMsgCfg (char *s)
 {
-    char *p, *q, *r, sbuf[258];
+    char *p, *q, *r, sbuf[4098];
 
     strcpy(sbuf,s); /* Clone the line so we don't change the original */
 
@@ -511,7 +511,7 @@ static int  Process (MSG *ap)
 {
     int i=0, oldmsgtyp;
     FILE *fp;
-    char *p, *q, line[258];
+    char *p, *q, line[4098];
 
     if(listflg) { /* List mode */
         printf("Reading %s\n",FancyStr(lstpath));
@@ -519,7 +519,7 @@ static int  Process (MSG *ap)
         if((fp=ShFopen(lstpath,"r"))==NULL) return 6; /* Open list file */
         oldmsgtyp=msgtyp;
         for(;;) {
-            if(fgets(line,256,fp)==NULL) break;
+            if(fgets(line,4096,fp)==NULL) break;
             p=line; while(*p==' '||*p=='\t') ++p; /* Strip leading */
             if((q=strchr(p,','))!=NULL) { /* Get optional netmail addr */
                 GetAddr(q+1,&to_addr); msgtyp=MSGTYP_MATX;
