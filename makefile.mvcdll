@@ -8,7 +8,7 @@ CDEFS  = -D__NT__ -D_CONSOLE -D_MAKE_DLL
 COPT   = -O2
 LOPT   = /link /opt:nowin98
 
-SMAPIL = ..\smapi\smapimvc.lib
+SMAPIL = ..\smapi\smapimvc.dll
 LIBS   = $(SMAPIL) msvcrt.lib Kernel32.lib
 
 all: mpost.exe
