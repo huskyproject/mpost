@@ -102,7 +102,6 @@
 #endif
 
 #if defined(__NT__)
-#define NOUSER
 #define NOGDI
 #define NOMSG
 #define WIN32_LEAN_AND_MEAN
@@ -1314,18 +1313,30 @@ static void  GetCmdLine (int argc, char *argv[])
                           break;
                 case 'f': strncpy(f,++p,XMSG_TO_SIZE-1);
                           f[XMSG_TO_SIZE-1]='\0';
+#ifdef __NT__
+                          CharToOem(f, f);
+#endif
                           CvtUs(f);
                           break;
                 case 'l': strncpy(l,++p,XMSG_TO_SIZE-1);
                           l[XMSG_TO_SIZE-1]='\0';
+#ifdef __NT__
+                          CharToOem(l, l);
+#endif
                           CvtUs(l);
                           break;
                 case 'j': strncpy(str_subj,++p,XMSG_SUBJ_SIZE-1);
                           str_subj[XMSG_SUBJ_SIZE-1]='\0';
+#ifdef __NT__
+                          CharToOem(str_subj, str_subj);
+#endif
                           ++gotsubj;
                           break;
                 case 'w': strncpy(str_from,++p,XMSG_FROM_SIZE-1);
                           str_from[XMSG_FROM_SIZE-1]='\0';
+#ifdef __NT__
+                          CharToOem(str_from, str_from);
+#endif
                           CvtUs(str_from);
                           break;
                 case 'o': strcpy(s,++p); GetAddr(s,&fm_addr);

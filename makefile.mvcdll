@@ -6,7 +6,7 @@ CFLAGS =-nologo -MD -Zp1 -I..
 CDEFS  =-D__NT__ -D_CONSOLE -D_MAKE_DLL
 COPT   =-O2
 LOPT   =/link /opt:nowin98
-LIBS   =..\smapi\smapimvc.lib msvcrt.lib Kernel32.lib
+LIBS   =..\smapi\smapimvc.lib User32.lib Kernel32.lib
 
 all:       mpost.exe
 
