@@ -11,7 +11,7 @@ SMAPIL=	..\smapi\smapimvc.lib
 all: mpost.exe
 
 mpost.exe:
-        $(CC) $(CFLAGS) $(COPT) $(COPT) -Fe$@ mpostp.c $(SMAPIL)
+        $(CC) $(CFLAGS) $(CDEFS) $(COPT) -Fe$@ mpostp.c $(SMAPIL)
 
 clean:
 	-del *.obj
