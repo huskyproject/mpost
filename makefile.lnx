@@ -1,9 +1,10 @@
-# include Husky-Makefile-Config
-include ../huskymak.cfg
-
 SMAPI=smapilnx
 
 CC  =gcc
+LIBDIR=/usr/local/lib
+INCDIR=/usr/local/include
+BINDIR=/usr/local/bin
+IBOPT=-s
 
 ifeq ($(DEBUG), 1)
   COPT= -I$(INCDIR) -DUNIX -ggdb
