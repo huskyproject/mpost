@@ -1,17 +1,24 @@
-# $Id$# Microsoft Visual C++ Makefile for DLL build
-# Written by Shilov Vladimir, 2:4627/64
+# $Id$
+# Microsoft Visual C++ Makefile for build dinamic program(s)
+# No support for the Husky build environment.
+#
+# Tested on MS Visual C 6.0
+#
 
-CC     =cl
-CFLAGS =-nologo -MD -Zp1 -I.. 
-CDEFS  =-D__NT__ -D_CONSOLE -D_MAKE_DLL
-COPT   =-O2
-LOPT   =/link /opt:nowin98
-LIBS   =..\smapi\smapimvc.lib User32.lib Kernel32.lib
+CC	= cl
+CFLAGS	= -nologo -MD -Zp1
+CINCL	= -I..\fidoconf -I..\smapi -I..\huskylib
+CDEFS	= -D__NT__ -D_CONSOLE -D_MAKE_DLL
+COPT	= -O2
+LOPT	= /link /opt:nowin98
+LIBS	= ..\huskylib\make\huskymvc.lib \
+	  ..\smapi\make\smapimvc.lib \
+	  user32.lib kernel32.lib
 
 all:       mpost.exe
 
 mpost.exe: mpostp.c
-	$(CC) $(CFLAGS) $(CDEFS) $(COPT) -Fempost mpostp.c $(LIBS) $(LOPT)
+	$(CC) $(CFLAGS) $(CINCL) $(CDEFS) $(COPT) -Fempost mpostp.c $(LIBS) $(LOPT)
 
 clean:	-del *.obj
 

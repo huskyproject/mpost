@@ -1,4 +1,5 @@
-/*****************************************************************************
+/*# $Id$
+ *****************************************************************************
  +===========================================================================+
  | MsgPost/2 Version 2.0a-stable, Nov 2000   (C) 1992 by CodeLand Australia, |
  |                                                      All Rights Reserved. |
@@ -80,7 +81,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 
-#include <smapi/compiler.h>
+#include <huskylib/compiler.h>
 
 #ifdef __OS2__
 
@@ -132,8 +133,6 @@
 #endif
 #endif
 
-#include <smapi/prog.h>               /* Squish API header */
-#include <smapi/alc.h>                /* Squish API header */
 #include <smapi/msgapi.h>             /* Squish API header */
 
 #ifndef UNAME
@@ -148,8 +147,8 @@
 #endif
 #endif
 
-#define VERSION     "2.0a-stable"   /* MsgPost version   */
-#define SVERSON     "2.0a"      /* Short version     */
+#define VERSION     "2.0b-current"   /* MsgPost version   */
+#define SVERSON     "2.0b"      /* Short version     */
 #define MAX_BLOCK   16000       /* Maximum text size */
 #define MAX_LINE    10000       /* Maximum lines     */
 

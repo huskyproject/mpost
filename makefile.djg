@@ -1,11 +1,33 @@
-# You can set CROSS=i386-go32- if you are using the djgpp cross compiler
-# edition
+# $Id$
+# Makefile to build DOS DPMI program(s) with DJGPP
+# No support for the Husky build environment.
 
-SMAPIDIR=../smapi
-SMAPI=smapidjg
+CC      = gcc
+RM	= del
 
-CC  =$(CROSS)gcc -I.. -O2
+CFLAGS  = -c -O3 -DMSDOS -mcpu=i486 -Wall -Wno-char-subscripts
+CINCL	= -I../h -I../fidoconf -I../smapi -I../huskylib
 
-mpost32.exe: mpostp.c
-	$(CC) -s -o mpost32.exe mpostp.c $(SMAPIDIR)/$(SMAPI).a
+LFLAGS	= -s
+LIBS	= ../huskylib/make/huskydjg.a ../smapi/make/smapidjg.a ../huskylib/make/huskydjg.a
 
+EXE	= .exe
+OBJ	= .o
+EXENAMEFLAG=-o 
+
+all : mpost.exe
+
+all: mpost$(EXE)
+
+%$(OBJ): %.c
+	$(CC) $(CFLAGS) $(CINCL) $*.c
+
+mpost$(EXE): mpostp$(OBJ)
+	$(CC) $(LFLAGS) -o mpost$(EXE) mpostp$(OBJ) $(LIBS)
+
+clean:
+	$(RM) *$(OBJ)
+	$(RM) *~
+
+distclean: clean
+	$(RM) mpost$(EXE)
