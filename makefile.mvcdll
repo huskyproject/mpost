@@ -1,0 +1,23 @@
+# $Id$
+# Microsoft Visual C++ Makefile for DLL build
+# Written by Shilov Vladimir, 2:4627/64
+
+CC     = cl
+CFLAGS = -nologo -Zp1 -I.. -Ih
+CDEFS  = -D__NT__ -D_CONSOLE -D_MAKE_DLL
+COPT   = -O2
+LOPT   = /link /opt:nowin98
+
+SMAPIL = ..\smapi\smapimvc.lib
+LIBS   = $(SMAPIL) msvcrt.lib Kernel32.lib
+
+all: mpost.exe
+
+mpost.exe: mpostp.c
+        $(CC) $(CFLAGS) $(CDEFS) $(COPT) -Fe$@ mpostp.c $(LIBS) $(LOPT)
+
+clean:
+    -del *.obj
+
+distclean: clean
+    -del *.exe
