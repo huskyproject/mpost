@@ -12,6 +12,10 @@
  | fixed Y2K problems, ported to DOS, Unix and NT                            |
  | by Tobias Ernst, 2:2476/418@fidonet, tobi@bland.fido.de                   |
  |                                                                           |
+ | Also includes modifications by:                                           |
+ | - Dmitry Sergienko @ 2:464/30.10,                                         |
+ | - and various members of the Husky project.                               |
+ |                                                                           |
  |            MsgPost uses the Squish Message Base Level 0 MsgAPI            |
  |                  Squish is a trademark of Scott J. Dudley                 |
  |                                                                           |
@@ -63,6 +67,7 @@
  | 4 - No system address set                                                 |
  | 5 - Message base open failed                                              |
  | 6 - Names list file not found                                             |
+ | 7 - No message area given                                                 |
  +===========================================================================+
  ****************************************************************************/
 
@@ -244,8 +249,8 @@ int main (int argc, char *argv[])
 
     SetUp(argc,argv);           /* Read initial command line    */
     if(!ReadCfg()) {            /* Read configuration file      */
-        printf("\n%cERROR: Configuration file not found!\n\n",0x07);
-        Quit(3);
+        printf("\n%cWARNING: Configuration file not found!\n\n",0x07);
+        /*        Quit(3); */
     }
 
     if(!ReadTxt()) {       /* Read the message source text file */
@@ -258,6 +263,10 @@ int main (int argc, char *argv[])
     if(!addrflg) {              /* If no system address         */
         printf("\n%cERROR: No address set!\n\n",0x07);
         Quit(4);
+    }
+    if(!(*msgpath)) {
+        printf("\n%cERROR: No message base area given!\n\n",0x07);
+        Quit(7);
     }
 
     /* Setup MsgApi */
@@ -349,9 +358,17 @@ static int  ReadTxt (void)
         return 1;
     }
 
-    printf("Reading %s\n",FancyStr(txtpath));
 
-    if((fp=ShFopen(txtpath,"r"))==NULL) return 0;
+    if (strcmp(txtpath,"-"))
+    {
+        printf("Reading %s\n", FancyStr(txtpath));
+        if((fp=ShFopen(txtpath,"r"))==NULL) return 0;
+    }
+    else
+    {
+        printf("Reading text from standard input.\n");
+        fp = stdin;
+    }
     fbuf=(char *)malloc(4096); /* Get extended file buffer */
     if(fbuf!=NULL) setvbuf(fp,fbuf,_IOFBF,4096);
 
@@ -377,7 +394,8 @@ static int  ReadTxt (void)
         strcat(line,"\r"); llen=strlen(line);
         if((lines[linescount]=(char *)malloc(llen+1))==NULL) {
             printf("\n%cERROR: Out of memory!\n\n",0x07);
-            fclose(fp);
+            if (fp != stdin)
+                fclose(fp);
             Quit(2);
         }
 
@@ -395,7 +413,8 @@ static int  ReadTxt (void)
         }
     }
 
-    fclose(fp);
+    if (fp != stdin)
+        fclose(fp);
     if(fbuf) free(fbuf);
     return 1;
 }
@@ -1312,7 +1331,7 @@ static void  Usage (void)
 {
    puts("    Syntax:  MPostP [-switch -switch ... ]\n\n"
         "\t                   COMMAND LINE ONLY\n"
-        "\t     -T<name>      Text source file path & name\n"
+        "\t     -T<name>      Text source file path & name (use - for stdin)\n"
         "\t     -K            Kill text file after processing\n"
         "\t     -C<name>      Configuration file path & name\n"
         "\t     -@<name>      Names list file mode\n"

@@ -8,23 +8,7 @@ the comfort of Windows and DOS users.
 0. What's new in this version
 -----------------------------
 
-Mpost 1.22 fixes a bug that crept into MPOST32.EXE (32 Bit DOS version):  The
-message number of *.MSG messages was always 1 (or any other fixed number)
-instead of the highest non-used message number.  This could lead to Mpost
-overwriting other mails.  Please do not use MPOST32.EXE 1.21 any more.  The
-executables for all other platforms are not affected.
-
-Mpost 1.21 is identical to Mpost 1.20, except for the fact that it has
-been linked against a Y2K safe version of the message API, while the one
-that had been used for 1.20 turned out to be not Y2K safe.
-
-There is no NT/alpha executable any more, because I don't have any NT
-installation on DEC Alpha any more. If you need MPost on NT/alpha, please
-contact me and we will find a solution.
-
-Also, the buffer size for a message line has been raised from 256 characters
-to 4096 characters, allowing you to post in a paragraph-oriented way instead
-of line-oriented.
+See file Changelog.
 
 1. About MsgPost and the current status
 ---------------------------------------
@@ -133,6 +117,7 @@ can in theory specify all options via command line.
  | 4 - No system address set                                                 |
  | 5 - Message base open failed                                              |
  | 6 - Names list file not found                                             |
+ | 7 - No message folder file name set.                                      |
  +---------------------------------------------------------------------------+
 
 3. Mpost and the charset kludge
