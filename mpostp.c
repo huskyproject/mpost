@@ -71,7 +71,18 @@
  +===========================================================================+
  ****************************************************************************/
 
-#ifdef OS2
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+#include <time.h>
+#include <fcntl.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+
+#include <smapi/compiler.h>
+
+#ifdef __OS2__
 
 #define INCL_DOSDATETIME
 #include <os2.h>
@@ -80,24 +91,17 @@
 #undef EXPENTRY
 #endif
 
-#elif defined(UNIX)
-#include <unistd.h>
-#elif defined(__NT__)
-#elif defined(__DJGPP__)
-#else
-#error Unsupported environment.
 #endif
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <ctype.h>
-#include <time.h>
+#ifdef HAS_UNISTD_H
+#include <unistd.h>
+#endif
 
-#if defined(OS2) || defined(__DJGPP__) || defined(__NT__)
+#ifdef HAS_IO_H
 #include <io.h>
-#include <sys/types.h>
-#include <sys/stat.h>
+#endif
+
+#ifdef HAS_SHARE_H
 #include <share.h>
 #endif
 
@@ -109,16 +113,14 @@
 #undef EXPENTRY
 #endif
 
-#if defined(UNIX) || defined(__DJGPP__)
+#if defined(__UNIX__) || defined(__DJGPP__)
 #define _MAX_DRIVE FILENAME_MAX
-#define _MAX_DIR FILENAME_MAX
+#define _MAX_DIR   FILENAME_MAX
 #define _MAX_FNAME FILENAME_MAX
-#define _MAX_EXT FILENAME_MAX
+#define _MAX_EXT   FILENAME_MAX
 #endif
 
-#include <fcntl.h>
-
-#ifdef UNIX
+#ifdef __UNIX__
 #ifndef O_TEXT
 #define O_TEXT 0
 #endif
@@ -135,13 +137,13 @@
 #include <smapi/msgapi.h>             /* Squish API header */
 
 #ifndef UNAME
-#ifdef OS2
-#define UNAME "2"
+#ifdef __OS2__
+#define UNAME "OS2"
 #elif defined(__DJGPP__)
 #define UNAME "386"
 #elif defined(__NT__)
 #define UNAME "NT"
-#else
+#elif defined(__UNIX__)
 #define UNAME "UNX"
 #endif
 #endif
@@ -251,7 +253,7 @@ int main (int argc, char *argv[])
     struct _minf mi;            /* API structure                */
     MSGA *ap;                   /* API area pointer             */
 
-    
+
     printf("\nMPost/"UNAME" v" VERSION " - the Fidonet/Squish/Jam Message Base Writer"
            "\n   (C) Copyright 1992 by CodeLand, All Rights Reserved\n\n");
 
@@ -312,7 +314,7 @@ int main (int argc, char *argv[])
         printf("\n%cERROR: List file not found!\n\n",0x07);
     }
 
-    MsgUnlock(ap); 
+    MsgUnlock(ap);
 
 
     MsgCloseArea(ap);    /* Unlock & close the base  */
@@ -930,8 +932,8 @@ static unsigned long  HsecTime (void)
 {
     unsigned long i,j;
 
-#if defined(OS2) || defined(__NT__)
-#ifdef OS2
+#if defined(__OS2__) || defined(__NT__)
+#ifdef __OS2__
     DATETIME dt;
     APIRET rc;
 #else
@@ -941,7 +943,7 @@ static unsigned long  HsecTime (void)
     i = j = 0;
     while (i==j || j == 0)
     {
-#ifdef OS2
+#ifdef __OS2__
         rc = DosGetDateTime(&dt);
         i=((dt.day+(((unsigned)dt.month*3057-3007)/100))*144000L) +
             (dt.hours*360000L) +                    /* hours today: hsec    */
@@ -1021,7 +1023,7 @@ static void  AddSlash (char *str)
     if(p!=str)
     {
        p--;
-#if defined(OS2) || defined(__NT__) || defined(__DJGPP__)
+#if defined(__OS2__) || defined(__NT__) || defined(__DJGPP__)
        if(*p!='\\') strcat(str,"\\");
 #else
        if(*p!='/') strcat(str,"/");
@@ -1122,7 +1124,7 @@ static char *  FancyStr (char *string)
     char *s;
 
     s=string;
-#ifdef UNIX
+#ifdef __UNIX__
     return s;
 #endif
     while(*string) {
@@ -1147,7 +1149,7 @@ static char *  FancyStr (char *string)
 
 static void  MakeExePath (char *pth)
 {
-#ifdef EMX
+#ifdef __EMX__
     char drive[_MAX_DRIVE], dir[_MAX_DIR], name[_MAX_FNAME], ext[_MAX_EXT];
 
     _splitpath(pth,drive,dir,name,ext);
