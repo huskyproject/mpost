@@ -1,8 +1,8 @@
-MsgPost/2 Version 1.22 TE, Dec 1999       (C) 1992 by CodeLand Australia
+MsgPost/2 Version 2.0, Oct 2000           (C) 1992 by CodeLand Australia
 ========================================================================
 
 Unix users, use    cat README | tr -d \\\r | less    to view this file.
-Source code maintainers, please leave the carriage retruns in this file for
+Source code maintainers, please leave the carriage returns in this file for
 the comfort of Windows and DOS users.
 
 0. What's new in this version
@@ -20,10 +20,10 @@ posting a monthly echomail statistics, posting rules files, or similar
 tasks.
 
 Mpost is (C) by Codeland Australia and has been written by Colin Wheat,
-originally for OS/2 only.  The last release of MPost before this version
-was MPost 1.10.  The exact license status of MPost is questionable; but it
-seem sot be freeware as its source code is available.  I decided to leave
-in the Codeland Copyright statement.
+originally for OS/2 only.  The last release of MPost before I took over the
+source code this version was MPost 1.10.  The exact license status of MPost
+is questionable; but it seem sot be freeware as its source code is
+available.  I decided to leave in the Codeland Copyright statement.
 
 In 1999, I (Tobias Ernst) have done some modifications to this source code.
 Year 2000 bugs had to be fixed, I added a way to add FTSC 0054 charset
@@ -40,13 +40,13 @@ I do NOT intend to further work on this code, except for bugfixes.  If
 anybody wants to do changes on the code and release a new version, I can
 offer my help in compiling the source code for all platforms that the
 prospective programmer might not have avialable, i.E. I offer to produce
-binaries and resolve porting issues.  But I definitely will not start to work
-on the code on my own for adding new features or similar, unless I need
-them personally.  So consider this a frozen release until the sime that
-some other person picks up the code.  I have submitted the code the the
-Husky project, so maybe there will be some development going on, like
+binaries and resolve porting issues.  But I definitely will not start to
+work on the code on my own for adding new features or similar, unless I
+need them personally.  So consider this a frozen release until the sime
+that some other person picks up the code.  I have submitted the code the
+the Husky project, so maybe there will be some development going on, like
 fidoconfig adaption or simlar.  View the Husky project site at
-http://husky.sar-gmbh.com for more information.
+http://husky.physcip.uni-stuttgart.de for more information.
 
 2. Using MPost
 --------------
@@ -56,7 +56,7 @@ You can use one of the following executables:
 MPOSTP.EXE     -- OS/2 32 Bit standalone executable
 MPOSTNTI.EXE   -- Windows 32 Bit executable for Windows 95/98/NT on Intel CPUs
 MPOST32.EXE    -- DOS executable. Requires an DPMI memory manager.
-MPOSTLNX       -- Linux executable, dynamically linked against libc.5.4.23
+MPOSTLNX       -- Linux executable, dynamically linked
 
 The source code will also compile on most other Unix systems, see below.
 
@@ -80,7 +80,7 @@ can in theory specify all options via command line.
  | -?           Program help screen                                          |
  |                                                                           |
  |              CONFIGURATION OVERRIDES                                      |
- | -M<name>     Message area path & name                                     |
+ | -M<name>     Message area path & name (prefix $ for Squish, ! for Jam)    |
  | -N<addr>     Netmail format - send to address                             |
  | -O<addr>     [Zone:]Net/Node[.Point][@Domain]                             |
  | -P[cfhdkpru] Message priority flag(s)                                     |
@@ -163,24 +163,23 @@ on UNIX and DOS because of this problem.
 5. Hints on compiling Mpost
 ---------------------------
 
-Compiling Mpost requires the SMAPI source code, revision 1.6.1 (15-Dec-99)
-or newer. You can get it from www.tichy.de,
-ftp://ftp.sar-gmbh.com/pub/freeware/husky, or by requesting the magic
-SMAPI from 2:2432/645 or 2:2476/418. Place the smapi and Mpost in
-separate subdirectories at the same level, i.E. to c:\source\smapi and
-c:\source\mpost, respectively. Then compile a SMAPI for your operating
-system. If you have problems, the Msged TE manual contains exhaustive
+Compiling Mpost requires the SMAPI source code, revision 1.6.4 or newer.
+You can get it from http://husky.physcip.uni-stuttgart.de or by requesting
+magic SMAPI from 2:2476/418.  Place the smapi and Mpost in separate
+subdirectories at the same level, i.E. to c:\source\smapi and
+c:\source\mpost, respectively.  Then compile a SMAPI for your operating
+system.  If you have problems, the Msged TE manual contains exhaustive
 information on how to do this.
 
 After that, use one of the makefiles that come with Mpost:
 
+  Makefile       -- for compiling in the Husky build environment
   makefile.rxw   -- for compiling with the EMX RSX/NT compiler for Win95/98/NT
   makefile.mgw   -- for compiling with the Mingw32 compiler for Win95/98/NT
   makefile.emo   -- for compiling with the EMX compiler for OS/2
   makefile.ibo   -- for compiling with IBM CSet/2 for OS/2
   makefile.djg   -- for compiling with the DJGPP compiler for DOS
   makefile.unx   -- for compiling with any "cc" compiler on Unix/Linux/...
-  husky.lnx      -- for compiling in the Husky build environment
 
 6. Contact
 ----------
@@ -188,7 +187,7 @@ After that, use one of the makefiles that come with Mpost:
 This version of Mpost is available for f'req using magic MPOST at
 2:2476/418, or via WWW from:
 http://www.physcip.uni-stuttgart.de/tobi/projects.html.
-You can also check ftp://ftp.sar-gmbh.com/pub/freeware/husky for the latest
+You can also check http://husky.physcip.uni-stuttgart.de for the latest
 source code.
 
 If you want to contact me, you can do so at the following addresses:

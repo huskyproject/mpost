@@ -9,7 +9,7 @@
  | by Wouter Cloetens, 2:292/608.18@fidonet, 81:432/109@os2net               |
  |                                                                           |
  | Modified to use the SMAPI, added CHRS kludge,                             |
- | fixed Y2K problems, ported to DOS, Unix and NT                            |
+ | fixed Y2K problems, ported to DOS, Unix and NT, added JAM support         |
  | by Tobias Ernst, 2:2476/418@fidonet, tobi@bland.fido.de                   |
  |                                                                           |
  | Also includes modifications by:                                           |
@@ -252,7 +252,7 @@ int main (int argc, char *argv[])
     char dummy[80];
 
     
-    printf("\nMPost/"UNAME" v" VERSION " - the Fidonet/Squish Message Base Writer"
+    printf("\nMPost/"UNAME" v" VERSION " - the Fidonet/Squish/Jam Message Base Writer"
            "\n   (C) Copyright 1992 by CodeLand, All Rights Reserved\n\n");
 
     SetUp(argc,argv);           /* Read initial command line    */
@@ -286,7 +286,12 @@ int main (int argc, char *argv[])
         if(!*str_orig) if(!ReadOrig()) strcpy(str_orig,def_orig);
 
     MsgOpenApi(&mi); /* Open the MsgApi */
-    areatyp=(*msgpath=='$'?MSGTYPE_SQUISH:MSGTYPE_SDM);
+    switch(*msgpath)
+    {
+    case '$': areatyp=MSGTYPE_SQUISH; break;
+    case '!': areatyp=MSGTYPE_JAM; break;
+    default:  areatyp=MSGTYPE_SDM;
+    }
     if(areatyp==MSGTYPE_SDM&&msgtyp!=MSGTYP_MATX) areatyp|=MSGTYPE_ECHO;
 
 #ifdef LOCKDEBUG
@@ -295,7 +300,7 @@ int main (int argc, char *argv[])
 #endif    
 
     /* Open the message base */
-    if((ap=MsgOpenArea((byte *)msgpath+(*msgpath=='$'),
+    if((ap=MsgOpenArea((byte *)msgpath+(areatyp != MSGTYPE_SDM),
                        MSGAREA_NORMAL | MSGAREA_CRIFNEC,areatyp)
        )==NULL) {
         printf("\n%cERROR: Message base open failed with error code %d!\n\n",
@@ -664,8 +669,15 @@ static void  WriteMsg (MSG *ap)
 
         msg=MsgOpenMsg(ap,MOPEN_CREATE,0L); /* Create new message */
         BuildCtrl(ctrl,&ctrllen,i+1,split_num);
+#if 0
         MsgWriteMsg(msg,FALSE,&xmsg,NULL,0L,textcount,ctrllen,(byte *)ctrl);
         MsgWriteMsg(msg,TRUE,NULL,(byte *)textbuf,textcount,textcount,0L,NULL);
+#else
+                                /* write in one chunk, so that we can also use
+                                   the JAM API */
+        MsgWriteMsg(msg,FALSE,&xmsg,(byte *)textbuf,textcount,textcount,
+                    ctrllen,(byte *)ctrl);
+#endif
         MsgCloseMsg(msg);
     }
 
@@ -773,8 +785,15 @@ static int  ReadOrig (void)
     FILE *fp;
     char *p, buf[128];
 
-    if(*msgpath=='$') { strcpy(buf,msgpath+1); strcat(buf,".SQO"); }
-    else { strcpy(buf,msgpath); strcat(buf,"\\ORIGIN."); }
+    if(*msgpath=='$') {
+        strcpy(buf,msgpath+1); strcat(buf,".SQO");
+    }
+    else if(*msgpath=='!') {
+        strcpy(buf,msgpath+1); strcat(buf,".JOR");
+    }
+    else {
+        strcpy(buf,msgpath); strcat(buf,"\\ORIGIN.");
+    }
     printf("Reading %s\n",FancyStr(buf));
 
     if((fp=ShFopen(buf,"r"))==NULL) return 0;
@@ -1390,5 +1409,3 @@ static void  Usage (void)
 
     Quit(1);
 }
-
-
