@@ -102,7 +102,11 @@
 
 #if defined(__NT__)
 #define NOUSER
+#define NOGDI
+#define NOMSG
+#define WIN32_LEAN_AND_MEAN
 #include <windows.h>
+#undef EXPENTRY
 #endif
 
 #if defined(UNIX) || defined(__DJGPP__) || defined(__MINGW32__)
