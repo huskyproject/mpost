@@ -827,7 +827,7 @@ static void  BuildCtrl (char *str, int *len, int num, int maxnum)
         t=localtime(&time_now);
         sprintf(ubuf,"@%u/%u",fm_addr.net,fm_addr.node); ubuf[12]='\0';
         sprintf(sbuf,"\01SPLIT: %02u %s %02u %02u:%02u:%02u %-12s %05u %02u/%02u +++++++++++",
-            t->tm_mday,Months[t->tm_mon],t->tm_year,
+            t->tm_mday,Months[t->tm_mon],t->tm_year % 100,
             t->tm_hour,t->tm_min,t->tm_sec,ubuf,mn,num,maxnum);
         strcat(str,sbuf);
     }
