@@ -31,7 +31,7 @@ HEADERS	=
 _SRC_DIR= ./
 
 # Headers directory
-H_DIR	= ./
+H_DIR	= ./h/
 
 # Binary file(s) to build from sources
 PROGRAMS= $(LIBNAME)$(_EXE)

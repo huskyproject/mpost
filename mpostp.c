@@ -135,20 +135,10 @@
 
 #include <smapi/msgapi.h>             /* Squish API header */
 
-#ifndef UNAME
-#ifdef __OS2__
-#define UNAME "OS2"
-#elif defined(__DJGPP__)
-#define UNAME "386"
-#elif defined(__NT__)
-#define UNAME "NT"
-#elif defined(__UNIX__)
-#define UNAME "UNX"
-#endif
-#endif
+#include "version.h"
 
-#define VERSION     "2.0b-current"   /* MsgPost version   */
-#define SVERSON     "2.0b"      /* Short version     */
+char *versionStr;
+
 #define MAX_BLOCK   16000       /* Maximum text size */
 #define MAX_LINE    10000       /* Maximum lines     */
 
@@ -244,7 +234,6 @@ static void  SetUp (int argc, char *argv[]);
 static void  GetCmdLine (int argc, char *argv[]);
 static void  Usage (void);
 
-
 int main (int argc, char *argv[])
 {
     int status=0;               /* Exit status                  */
@@ -252,9 +241,16 @@ int main (int argc, char *argv[])
     struct _minf mi;            /* API structure                */
     MSGA *ap;                   /* API area pointer             */
 
+    versionStr = GenVersionStr( "mpost", VER_MAJOR, VER_MINOR, VER_PATCH,
+                               VER_BRANCH, cvs_date );
 
-    printf("\nMPost/"UNAME" v" VERSION " - the Fidonet/Squish/Jam Message Base Writer"
-           "\n   (C) Copyright 1992 by CodeLand, All Rights Reserved\n\n");
+    printf("%s\n", versionStr);
+
+/*
+    printf("\nThe Fidonet/Squish/Jam Message Base Writer\n"
+           "(C) Copyright 1992 by CodeLand, 2002-2004 by Husky project.\n"
+           "All Rights Reserved\n");
+*/
 
     SetUp(argc,argv);           /* Read initial command line    */
     if(!ReadCfg()) {            /* Read configuration file      */
@@ -797,7 +793,7 @@ static void  BuildTear (char *s)
 
     *s='\0';
     if(msgtyp==MSGTYP_ECHO||msgtyp==MSGTYP_LOCL) {
-        strcpy(s,"\r--- MPost/"UNAME" v" SVERSON "\r"); /* Tear line */
+            sprintf(line,"\r--- %s\r", versionStr);
 
         if(msgtyp==MSGTYP_ECHO) {
             /* Origin line */
@@ -880,7 +876,7 @@ static void  BuildCtrl (char *str, int *len, int num, int maxnum)
     sprintf(str,"\01MSGID: %s %08lx",AddrToStr(&fm_addr),seed);
 
     if(msgtyp==MSGTYP_CONF||msgtyp==MSGTYP_MATX) {
-        sprintf(sbuf,"\01PID: MPost/"UNAME" %s",SVERSON);
+        sprintf(sbuf,"\01PID: %s", versionStr);
         strcat(str,sbuf);
     }
 
@@ -1239,7 +1235,7 @@ static void  SetUp (int argc, char *argv[])
     sprintf(cfgpath,"%sMPost.Cfg",exepath);
     sprintf(lstpath,"%sMPost.Lst",exepath);
     strcpy(str_to,"All");
-    strcpy(str_from,"MPost/"UNAME" " SVERSON);
+    strcpy(str_from, versionStr);
     strcpy(str_subj,"Automated Posting");
     strcpy(charset,"IBMPC");
 
@@ -1380,25 +1376,25 @@ static void  GetCmdLine (int argc, char *argv[])
 
 static void  Usage (void)
 {
-   puts("    Syntax:  MPostP [-switch -switch ... ]\n\n"
-        "\t                   COMMAND LINE ONLY\n"
-        "\t     -T<name>      Text source file path & name (use - for stdin)\n"
-        "\t     -K            Kill text file after processing\n"
-        "\t     -C<name>      Configuration file path & name\n"
-        "\t     -@<name>      Names list file mode\n"
-        "\t     -?            Program help screen\n\n"
-        "\t                   CONFIGURATION OVERRIDES\n"
-        "\t     -M<name>      Message area path & name\n"
-        "\t     -N<addr>      Netmail format - send to address\n"
-        "\t     -O<addr>      Message origin address\n"
-        "\t     -P<cfhdkprul> Message priority flag(s)\n"
-        "\t     -F<fname>     Message addressed to first name\n"
-        "\t     -L<lname>     Message addressed to last name\n"
-        "\t     -W<name>      Message addressed from name\n"
-        "\t     -J<subj>      Message subject (NO spaces)\n"
-        "\t     -1            First line of text file is subject line\n"
-        "\t     -S<##>        Split long messages to ## Kb size (0-16)\n"
-        "\t     -h<charset>   Specify charset kludge name to use"
+   puts("\nUsage:  mpost [-switch -switch ... ]\n"
+        "\nCommand line only:\n"
+        "\t-T<name>      - Text source file path & name (use - for stdin)\n"
+        "\t-K            - Kill text file after processing\n"
+        "\t-C<name>      - Configuration file path & name\n"
+        "\t-@<name>      - Names list file mode\n"
+        "\t-?            - Program help screen\n"
+        "\nConfiguration Overrides:\n"
+        "\t-M<name>      - Message area path & name\n"
+        "\t-N<addr>      - Netmail format - send to address\n"
+        "\t-O<addr>      - Message origin address\n"
+        "\t-P<cfhdkprul> - Message priority flag(s)\n"
+        "\t-F<fname>     - Message addressed to first name\n"
+        "\t-L<lname>     - Message addressed to last name\n"
+        "\t-W<name>      - Message addressed from name\n"
+        "\t-J<subj>      - Message subject (NO spaces)\n"
+        "\t-1            - First line of text file is subject line\n"
+        "\t-S<##>        - Split long messages to ## Kb size (0-16)\n"
+        "\t-h<charset>   - Specify charset kludge name to use"
     );
 
     Quit(1);
