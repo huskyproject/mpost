@@ -1,6 +1,6 @@
 /*****************************************************************************
  +===========================================================================+
- | MsgPost/2 Version 1.22 TE, Dec 1999       (C) 1992 by CodeLand Australia, |
+ | MsgPost/2 Version 1.23beta TE, Dec 1999   (C) 1992 by CodeLand Australia, |
  |                                                      All Rights Reserved. |
  | Written by Colin Wheat of Fidonet 3:690/613                               |
  | Compiled using C SET/2                                                    |
