@@ -20,7 +20,8 @@ all:       mpost.exe
 mpost.exe: mpostp.c
 	$(CC) $(CFLAGS) $(CINCL) $(CDEFS) $(COPT) -Fempost mpostp.c $(LIBS) $(LOPT)
 
-clean:	-del *.obj
+clean:
+	-del *.obj
 
 distclean: clean
 	-del *.exe
