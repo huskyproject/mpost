@@ -1,0 +1,27 @@
+# include Husky-Makefile-Config
+include ../huskymak.cfg
+
+ifeq ($(DEBUG), 1)
+  COPT= -I../smapi -I$(INCDIR) -ggdb
+else
+  COPT= -I../smapi -I$(INCDIR) -s
+endif
+
+CDEFS=-D$(OSTYPE) $(ADDCDEFS)
+
+LOPT= -L$(LIBDIR)
+
+all: mpost$(EXE)
+
+mpost$(EXE): mpostp.c
+	$(CC) $(COPT) $(CDEFS) $(LOPT) -o mpost$(EXE) mpostp.c -lsmapi
+
+clean:
+	-$(RM) *$(OBJ) *~ core
+
+distclean: clean
+	-$(RM) mpost$(EXE)
+
+install: mpost$(EXE)
+	install $(IBOPT) mpost$(EXE) $(BINDIR)
+
