@@ -13,7 +13,7 @@ LIBS   = $(SMAPIL) msvcrt.lib Kernel32.lib
 
 all: mpost.exe
 
-mpost.exe: mpostp.c
+mpost.exe: mpostp.c $(SMAPIL)
         $(CC) $(CFLAGS) $(CDEFS) $(COPT) -Fe$@ mpostp.c $(LIBS) $(LOPT)
 
 clean:
