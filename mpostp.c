@@ -289,8 +289,10 @@ int main (int argc, char *argv[])
     areatyp=(*msgpath=='$'?MSGTYPE_SQUISH:MSGTYPE_SDM);
     if(areatyp==MSGTYPE_SDM&&msgtyp!=MSGTYP_MATX) areatyp|=MSGTYPE_ECHO;
 
+#ifdef LOCKDEBUG
     printf ("next step: openarea\n");
     gets(dummy);
+#endif    
 
     /* Open the message base */
     if((ap=MsgOpenArea((byte *)msgpath+(*msgpath=='$'),
@@ -301,26 +303,34 @@ int main (int argc, char *argv[])
         Quit(5);
     }
 
+#ifdef LOCKDEBUG
     printf ("next step: Lock\n");
     gets(dummy);
+#endif    
 
     MsgLock(ap); /* Lock the base */
 
+#ifdef LOCKDEBUG
     printf ("next step: Write\n");
     gets(dummy);
+#endif    
 
     /* Write the message(s) */
     if((status=Process(ap))!=0) {
         printf("\n%cERROR: List file not found!\n\n",0x07);
     }
 
+#ifdef LOCKDEBUG
     printf ("next step: unlock\n");
     gets(dummy);
+#endif    
 
     MsgUnlock(ap); 
 
+#ifdef LOCKDEBUG
     printf ("next step: close\n");
     gets(dummy);
+#endif    
 
 
     MsgCloseArea(ap);    /* Unlock & close the base  */
