@@ -112,6 +112,8 @@
 #define _MAX_EXT FILENAME_MAX
 #endif
 
+#include <fcntl.h>
+
 #ifdef UNIX
 #ifndef O_TEXT
 #define O_TEXT 0
@@ -124,7 +126,6 @@
 #endif
 #endif
 
-#include <fcntl.h>
 #include "prog.h"               /* Squish API header */
 #include "alc.h"                /* Squish API header */
 #include "msgapi.h"             /* Squish API header */
@@ -300,7 +301,7 @@ int main (int argc, char *argv[])
     MsgUnlock(ap); MsgCloseArea(ap);    /* Unlock & close the base  */
     MsgCloseApi();                      /* Close the API            */
 
-    if(killtxtflg) unlink(txtpath);     /* Delete text source file  */
+    if(killtxtflg) remove(txtpath);     /* Delete text source file  */
     Quit(status);
     return 0; /* remove bogus warnings */
 }
@@ -1109,9 +1110,9 @@ static char *  FancyStr (char *string)
 
 static void  MakeExePath (char *pth)
 {
+#ifdef EMX
     char drive[_MAX_DRIVE], dir[_MAX_DIR], name[_MAX_FNAME], ext[_MAX_EXT];
 
-#ifdef EMX
     _splitpath(pth,drive,dir,name,ext);
     strcpy(exepath,drive); strcat(exepath,dir);
     AddSlash(exepath);

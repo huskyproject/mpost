@@ -2,19 +2,24 @@
 include ../huskymak.cfg
 
 ifeq ($(DEBUG), 1)
-  COPT= -I../smapi -I$(INCDIR) -ggdb
+  COPT= -I../smapi -I$(INCDIR) $(DEBCFLAGS) $(WARNFLAGS)
+  LFLAGS=$(DEBLFLAGS)
 else
-  COPT= -I../smapi -I$(INCDIR) -s
+  COPT= -I../smapi -I$(INCDIR) $(OPTCFLAGS) $(WARNFLAGS)
+  LFLAGS=$(OPTLFLAGS)
 endif
 
 CDEFS=-D$(OSTYPE) $(ADDCDEFS)
 
-LFLAGS=-L$(LIBDIR) -lsmapi
+LIBS=-L$(LIBDIR) -lsmapi
 
 all: mpost$(EXE)
 
-mpost$(EXE): mpostp.c
-	$(CC) $(COPT) $(CDEFS) $(LFLAGS) -o mpost$(EXE) mpostp.c
+%$(OBJ): %.c
+	$(CC) $(COPT) $(CDEFS) $*.c
+
+mpost$(EXE): mpostp$(OBJ)
+	$(CC) $(LFLAGS) -o mpost$(EXE) mpostp$(OBJ) $(LIBS)
 
 clean:
 	-$(RM) *$(OBJ)
