@@ -32,3 +32,6 @@ distclean: clean
 install: mpost$(EXE)
 	$(INSTALL) $(IBOPT) mpost$(EXE) $(BINDIR)
 
+uninstall:
+	-$(RM) $(BINDIR)$(DIRSEP)mpost$(EXE)
+
