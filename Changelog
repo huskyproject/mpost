@@ -1,4 +1,6 @@
-Mpost 1.23 (development version, not yet released)
+Mpost 2.0
+- Mpost now supports JAM areas. Use a ! in front of the area path (like you
+  use $ for squish areas), e.g.: !e:\msgbase\linux
 - Patch for reading text from stdin (use "-" as text file name) from Dmitry
   Sergienko.
 - Mpost no longer requires a configuration file if you specify everything
