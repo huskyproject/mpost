@@ -1,6 +1,5 @@
-MPOST (MsgPost) 1.21 TE - Year 2000 Update
+MPOST (MsgPost) 1.22 TE --- Bug Fix Update
 ==========================================
-MPOST 1.20 was not Y2K safe!! 1.21 now is.
 MPost is a utility  for posting text files
 as fido  messages  into  Squish  or  *.MSG
 netmail or echomail message areas from the

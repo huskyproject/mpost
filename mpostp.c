@@ -1,6 +1,6 @@
 /*****************************************************************************
  +===========================================================================+
- | MsgPost/2 Version 1.21 TE, Dec 1999       (C) 1992 by CodeLand Australia, |
+ | MsgPost/2 Version 1.22 TE, Dec 1999       (C) 1992 by CodeLand Australia, |
  |                                                      All Rights Reserved. |
  | Written by Colin Wheat of Fidonet 3:690/613                               |
  | Compiled using C SET/2                                                    |
@@ -136,8 +136,8 @@
 #endif
 #endif
 
-#define VERSION     "1.21 TE"   /* MsgPost version   */
-#define SVERSON     "1.21"      /* Short version     */
+#define VERSION     "1.22 TE"   /* MsgPost version   */
+#define SVERSON     "1.22"      /* Short version     */
 #define MAX_BLOCK   16000       /* Maximum text size */
 #define MAX_LINE    10000       /* Maximum lines     */
 

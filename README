@@ -1,4 +1,4 @@
-MsgPost/2 Version 1.21 TE, Jun 1999       (C) 1992 by CodeLand Australia
+MsgPost/2 Version 1.22 TE, Dec 1999       (C) 1992 by CodeLand Australia
 ========================================================================
 
 Unix users, use    cat README | tr -d \\\r | less    to view this file.
@@ -7,6 +7,12 @@ the comfort of Windows and DOS users.
 
 0. What's new in this version
 -----------------------------
+
+Mpost 1.22 fixes a bug that crept into MPOST32.EXE (32 Bit DOS version):  The
+message number of *.MSG messages was always 1 (or any other fixed number)
+instead of the highest non-used message number.  This could lead to Mpost
+overwriting other mails.  Please do not use MPOST32.EXE 1.21 any more.  The
+executables for all other platforms are not affected.
 
 Mpost 1.21 is identical to Mpost 1.20, except for the fact that it has
 been linked against a Y2K safe version of the message API, while the one
@@ -173,7 +179,7 @@ on UNIX and DOS because of this problem.
 ---------------------------
 
 Compiling Mpost requires the SMAPI source code, revision 1.6.1 (15-Dec-99)
-or newer. You can get it from www.tichy.de, 
+or newer. You can get it from www.tichy.de,
 ftp://ftp.sar-gmbh.com/pub/freeware/husky, or by requesting the magic
 SMAPI from 2:2432/645 or 2:2476/418. Place the smapi and Mpost in
 separate subdirectories at the same level, i.E. to c:\source\smapi and
