@@ -22,16 +22,16 @@ mpost$(EXE): mpostp$(OBJ)
 	$(CC) $(LFLAGS) -o mpost$(EXE) mpostp$(OBJ) $(LIBS)
 
 clean:
-	-$(RM) *$(OBJ)
-	-$(RM) *~
-	-$(RM) core
+	-$(RM) $(RMOPT) *$(OBJ)
+	-$(RM) $(RMOPT) *~
+	-$(RM) $(RMOPT) core
 
 distclean: clean
-	-$(RM) mpost$(EXE)
+	-$(RM) $(RMOPT) mpost$(EXE)
 
 install: mpost$(EXE)
 	$(INSTALL) $(IBOPT) mpost$(EXE) $(BINDIR)
 
 uninstall:
-	-$(RM) $(BINDIR)$(DIRSEP)mpost$(EXE)
+	-$(RM) $(RMOPT) $(BINDIR)$(DIRSEP)mpost$(EXE)
 
