@@ -5,4 +5,4 @@ SMAPI=smapidjg
 CC  =gcc -I$(SMAPIDIR)
 
 mpost32.exe: mpostp.c
-	$(CC) -o mpost32.exe mpostp.c $(SMAPIDIR)/$(SMAPI).a
+	$(CC) -s -o mpost32.exe mpostp.c $(SMAPIDIR)/$(SMAPI).a
