@@ -939,7 +939,7 @@ static unsigned long  HsecTime (void)
     SYSTEMTIME st;
 #endif
 
-    j = 0;
+    i = j = 0;
     while (i==j || j == 0)
     {
 #ifdef OS2

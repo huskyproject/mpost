@@ -1,19 +1,17 @@
 # $Id$
 # Microsoft Visual C++ Makefile
 
-CC     = cl
-CFLAGS = -nologo -Zp1 -I..
-CDEFS  = -D__NT__ -D_CONSOLE -D_MAKE_DLL
-COPT   = -O2
-LOPT   = /link /opt:nowin98
-
-SMAPIL = ..\smapi\smapimvc.lib
-LIBS   = $(SMAPIL) msvcrt.lib Kernel32.lib
+CC     =cl
+CFLAGS =-nologo -Zp1 -I..
+CDEFS  =-D__NT__ -D_CONSOLE
+COPT   =-O2
+LOPT   =/link /opt:nowin98
+LIBS   = ..\smapi\smapimvc.lib
 
 all: mpost.exe
 
-mpost.exe: mpostp.c $(SMAPIL)
-        $(CC) $(CFLAGS) $(CDEFS) $(COPT) -Fe$@ mpostp.c $(LIBS) $(LOPT)
+mpost.exe: mpostp.c 
+        $(CC) $(CFLAGS) $(CDEFS) $(COPT) -Fempost mpostp.c $(LIBS) $(LOPT)
 
 clean:
 	-del *.obj
