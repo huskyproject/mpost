@@ -1,0 +1,188 @@
+MsgPost/2 Version 1.20 TE, Jun 1999       (C) 1992 by CodeLand Australia
+========================================================================
+
+Unix users, use    cat README | tr -d \\\r | less    to view this file.
+Source code maintainers, please leave the carriage retruns in this file for
+the comfort of Windows and DOS users.
+
+1. About MsgPost and the current status
+---------------------------------------
+
+Mpost is a program to post a text file as netmail and echomail message into
+a Squish or *.MSG style message area from command line.  It is useful in
+shell or REXX scripts or batch files for system maintanance purposes, like
+posting a monthly echomail statistics, posting rules files, or similar
+tasks.
+
+Mpost is (C) by Codeland Australia and has been written by Colin Wheat,
+originally for OS/2 only.  The last release of MPost before this version
+was MPost 1.10.  The exact license status of MPost is questionable; but it
+seem sot be freeware as its source code is available.  I decided to leave
+in the Codeland Copyright statement.
+
+In 1999, I (Tobias Ernst) have done some modifications to this source code.
+Year 2000 bugs had to be fixed, I added a way to add FTSC 0054 charset
+kludges to the posted mails, and I ported the software to Unix, NT and DPMI
+DOS.  In order to make the public profit from these changes (especially the
+Y2K one), I hereby release these modifications to the public, both the
+source code and binaries for all relevant platforms.
+
+If you are already using Mpost and only want to have the Y2K upgrade,
+simply copy the provided executables over your current ones, they should
+work immediately with the old configuration file.
+
+I do NOT intend to further work on this code, except for bugfixes.  If
+anybody wants to do changes on the code and release a new version, I can
+offer my help in compiling the source code for all platforms that the
+prospective programmer might not have avialable, i.E. I offer to produce
+binaries and resolve porting issues.  But I definitely will start to work
+on the code on my own for adding new features or similar, unless I need
+them personally.  So consider this a frozen release until the sime that
+some other person picks up the code.  I have submitted the code the the
+Husky project, so maybe there will be some development going on, like
+fidoconfig adaption or simlar.  View the Husky project site at
+http://husky.sar-gmbh.com for more information.
+
+2. Using MPost
+--------------
+
+You can use one of the following executables:
+
+MPOSTP.EXE     -- OS/2 32 Bit standalone executable
+MPOSTNTI.EXE   -- Windows 32 Bit executable for Windows 95/98/NT on Intel CPUs
+MPOSTNTA.EXE   -- Windows 32 Bit executable for Windows NT on DEC Alpha CPUs
+MPOST32.EXE    -- DOS executable. Requires an DPMI memory manager.
+MPOSTLNX       -- Linux executable, dynamically linked against libc.5.4.23
+
+The source code will also compile on most other Unix systems, see below.
+
+The following list isshows all command line and configuration file options.
+It is all documentation that is available for the code, and I do not intend
+to write more.  It is enough to get it running, anyway.  For a more
+detailed description, also refer to mpost.cfg, the sample configuration
+file, which also contains some helpful remarks.
+
+ +---------------------------------------------------------------------------+
+ | COMMAND LINE:                                                             |
+ |                                                                           |
+ |              COMMAND LINE ONLY                                            |
+ | -T<name>     Text source file path & name                                 |
+ | -K           Kill text file after processing                              |
+ | -C<name>     Configuration file path & name                               |
+ | -@<name>     List file name                                               |
+ | -?           Program help screen                                          |
+ |                                                                           |
+ |              CONFIGURATION OVERRIDES                                      |
+ | -M<name>     Message area path & name                                     |
+ | -N<addr>     Netmail format - send to address                             |
+ | -O<addr>     [Zone:]Net/Node[.Point][@Domain]                             |
+ | -P[cfhdkpru] Message priority flag(s)                                     |
+ | -F<fname>    Message addressed to first name                              |
+ | -L<lname>    Message addressed to last name                               |
+ | -W<name>     Message addressed from name                                  |
+ | -J<subj>     Message subject                                              |
+ | -1           First line of text file is subject line                      |
+ | -S<##>       Split long messages to ## Kb size (0-16)                     |
+ | -h<charset>  Specify charset kludge name to use, like "IBMPC" or "LATIN-1"|
+ |                                                                           |
+ | CONFIGURATION FILE:                                                       |
+ |                                                                           |
+ | Address:     [Zone:]Net/Node[.Point][@Domain]                             |
+ | Origin:      <Your system echomail identification>                        |
+ | Area:        <Message area path & name>                                   |
+ | Netmail:     [Zone:]Net/Node[.Point][@Domain]                             |
+ | MsgType:     <Echomail | Conference | Local | Matrix>                     |
+ | To:          <Some Name>                                                  |
+ | From:        <Your Name>                                                  |
+ | Subj:        <Your Subject>                                               |
+ | Attr:        <c|f|h|d|k|p|r|u|l>                                          |
+ | FakeNet:     <###>                                                        |
+ | NoSeenBy:                                                                 |
+ | Split:       <###>                                                        |
+ | Charset:     <charset kludge name>                                        |
+ |                                                                           |
+ | ERROR LEVELS:                                                             |
+ |                                                                           |
+ | 0 - Normal exit                                                           |
+ | 1 - Syntax exit                                                           |
+ | 2 - Out of memory                                                         |
+ | 3 - Configuration or text file not found                                  |
+ | 4 - No system address set                                                 |
+ | 5 - Message base open failed                                              |
+ | 6 - Names list file not found                                             |
+ +---------------------------------------------------------------------------+
+
+3. Mpost and the charset kludge
+-------------------------------
+
+The FTSC 0054 charset kludge is a means to use national special characters
+(ASCII 128 to 254) in Fidonet mails. The charset kludge is a sign that tells
+mail readers in which character set the mails hass been written, so that they
+can recode the mail to the character set that the operating system / terminal
+of the receiver is using.
+
+Mpost does not include logic for charcter set kludges. All it can do is
+insert a level 2 character set, but you have to tell it which one. The rule
+of the thumb is:
+
+If the text file that you are posting uses special characters as used by DOS
+and OS/2, especially umlauts and IBM graphics characters (IBM graphics is
+often used by statistics generators to produce nicer borders), use either the
+configuration file statement
+
+   Charset: IBMPC
+
+or the "-hIBMPC" command line option. If you are using Windows or UNIX, it is
+most likely that your umlauts comply to ISO 8859-1. In this case, use
+
+   Charset: LATIN-1
+
+or the "-hLATIN-1" command line option. (Windows calls this ANSI,
+and uses it for the Times New Roman, Courier New etc. fonts, though not for
+the terminal window; Unix calls this ISO 8859-1 keymap, though some Linux
+boxes can also be configured to use CP850 or CP437 instead, which would be
+the same as IBMPC).
+
+4. MSGID considerations
+-----------------------
+
+For MSGID uniqueness reasons, the UNIX and DOS versions of MPost can only
+create one message per second.  The OS/2 and Win32 versions can create up
+to 100 messages per second.  MPOST will enforce the necessary delays, so
+you do not have to bother, it is only that MPOST might seem somewhat slow
+on UNIX and DOS because of this problem.
+
+5. Hints on compiling Mpost
+---------------------------
+
+Compiling Mpost requires the SMAPI source code. Up to the time of this
+writing, only the Husky project SMAPI version is Y2K ready, so I suggest you
+get that version from the Husky project site at
+ftp://ftp.sar-gmbh.com/pub/freeware/husky, or by freq from Michael Espey or
+Matthias Tichy. Plase the smapi and Mpost in separate subdirectories at the
+same level, i.E. to c:\source\smapi and c:\source\mpost, respectively. Then
+compile a SMAPI for your operating system. If you have problems, the Msged TE
+manual contains exhaustive information on how to do this.
+
+After that, use one of the makefiles that come with Mpost:
+
+  makefile.rxw   -- for compiling with the EMX RSX/NT compiler for Win95/98/NT
+  makefile.mgw   -- for compiling with the Mingw32 compiler for Win95/98/NT
+  makefile.emo   -- for compiling with the EMX compiler for OS/2
+  makefile.icc   -- for compiling with IBM CSet/2 for OS/2
+  makefile.djg   -- for compiling with the DJGPP compiler for DOS
+  makefile.unx   -- for compiling with any "cc" compiler on Unix/Linux/...
+
+6. Contact
+----------
+
+This version of Mpost is available for f'req using magic MPOST at
+2:2476/418.  You can also check ftp://ftp.sar-gmbh.com/pub/freeware/husky
+for the latest source code.
+
+If you want to contact me, you can do so at the following addresses:
+
+Fido:   Tobias Ernst @ 2:2476/418
+e-mail: tobi@bland.fido.de
+
+[EOF]

@@ -1,0 +1,8 @@
+
+SMAPIDIR=../smapi
+SMAPI=smapiemo
+
+CC  =gcc -I$(SMAPIDIR) -DOS2 -Zomf -Zsys
+
+mpostp.exe: mpostp.c
+	$(CC) mpostp.c -L$(SMAPIDIR) -l$(SMAPI)

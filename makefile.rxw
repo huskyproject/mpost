@@ -1,0 +1,9 @@
+
+SMAPIDIR=../smapi
+SMAPI=smapirxw
+TARGET=mpostnt.exe
+
+CC=gcc -D__NT__ -Zwin32 -Zsys
+
+$(TARGET): mpostp.c
+	$(CC) -I$(SMAPIDIR) -o $(TARGET) mpostp.c -L$(SMAPIDIR) -l$(SMAPI)
