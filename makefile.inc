@@ -28,10 +28,10 @@ OBJS	= mpostp$(_OBJ)
 HEADERS	=
 
 # Sources directory
-_SRC_DIR= ../src/
+_SRC_DIR= ./
 
 # Headers directory
-H_DIR	= ../h/
+H_DIR	= ./
 
 # Binary file(s) to build from sources
 PROGRAMS= $(LIBNAME)$(_EXE)
