@@ -5,16 +5,18 @@ Unix users, use    cat README | tr -d \\\r | less    to view this file.
 Source code maintainers, please leave the carriage returns in this file for
 the comfort of Windows and DOS users.
 
+
 0. What's new in this version
 -----------------------------
 
 See file Changelog.
 
+
 1. About MsgPost and the current status
 ---------------------------------------
 
 Mpost is a program to post a text file as netmail and echomail message into
-a Squish or *.MSG style message area from command line.  It is useful in
+a Squish, Jam or *.MSG style message area from command line.  It is useful in
 shell or REXX scripts or batch files for system maintanance purposes, like
 posting a monthly echomail statistics, posting rules files, or similar
 tasks.
@@ -46,7 +48,8 @@ need them personally.  So consider this a frozen release until the sime
 that some other person picks up the code.  I have submitted the code the
 the Husky project, so maybe there will be some development going on, like
 fidoconfig adaption or simlar.  View the Husky project site at
-http://husky.physcip.uni-stuttgart.de for more information.
+http://husky.sourceforge.net for more information.
+
 
 2. Using MPost
 --------------
@@ -120,6 +123,7 @@ can in theory specify all options via command line.
  | 7 - No message folder file name set.                                      |
  +---------------------------------------------------------------------------+
 
+
 3. Mpost and the charset kludge
 -------------------------------
 
@@ -150,6 +154,12 @@ and uses it for the Times New Roman, Courier New etc. fonts, though not for
 the terminal window; Unix calls this ISO 8859-1 keymap, though some Linux
 boxes can also be configured to use CP850 or CP437 instead, which would be
 the same as IBMPC).
+   Russian users must use CP866 instead of +7_FIDO or other obsolete, example:
+
+   Charset: CP866
+
+or the "-hCP866" command line option.
+
 
 4. MSGID considerations
 -----------------------
@@ -159,6 +169,7 @@ create one message per second.  The OS/2 and Win32 versions can create up
 to 100 messages per second.  MPOST will enforce the necessary delays, so
 you do not have to bother, it is only that MPOST might seem somewhat slow
 on UNIX and DOS because of this problem.
+
 
 5. Hints on compiling Mpost
 ---------------------------
@@ -180,6 +191,7 @@ After that, use one of the makefiles that come with Mpost:
   makefile.ibo   -- for compiling with IBM CSet/2 for OS/2
   makefile.djg   -- for compiling with the DJGPP compiler for DOS
   makefile.unx   -- for compiling with any "cc" compiler on Unix/Linux/...
+
 
 6. Contact
 ----------
