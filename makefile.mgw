@@ -4,7 +4,7 @@ SMAPI=smapimgw
 TARGET=mpostnt.exe
 
 CC=i386--mingw32-gcc 
-COPT=-D__NT__ -D__MINGW32__
+COPT=-D__NT__ -D__MINGW32__ -O2
 
 $(TARGET): mpostp.c
 	$(CC) $(COPT) -I$(SMAPIDIR) -o $(TARGET) mpostp.c ../smapi/smapimgw.a
