@@ -1,0 +1,11 @@
+MPOST (MsgPost) 2.0a-stable
+==========================================
+MPost is a utility  for posting text files
+as fido messages into Squish, JAM or *.MSG
+netmail or echomail message areas from the
+command line.  In  addition  to  the  OS/2
+version, ports have been added for Windows
+(95/NT/2000), DOS (DPMI) and Linux as well
+as  the  full source code.  Freeware based
+upon MPost  1.10,  which  is  (C)  1992 by
+Codeland, Australia.
