@@ -1,33 +1,37 @@
 # $Id$
-# Makefile to build DOS DPMI program(s) with DJGPP
+# Makefile to build MPOST/dpmi with gcc 3.x.x from DJGPP v2.03.
 # No support for the Husky build environment.
 
-CC      = gcc
-RM	= del
+# include Husky-Makefile-Config,
+# copy this file from ../../huskybse/huskymak.cfg.djg
+include ../huskymak.cfg
 
-CFLAGS  = -c -O3 -DMSDOS -mcpu=i486 -Wall -Wno-char-subscripts
-CINCL	= -I../h -I../fidoconf -I../smapi -I../huskylib
+include makefile.inc
 
-LFLAGS	= -s
-LIBS	= ../huskylib/make/huskydjg.a ../smapi/make/smapidjg.a ../huskylib/make/huskydjg.a
+# includes directories
+CINCL= -I$(H_DIR) -I../huskylib -I../smapi -I../fidoconf
 
-EXE	= .exe
-OBJ	= .o
-EXENAMEFLAG=-o 
+# libraries need to build binary file
+LIBS	= ../smapi/make/$(LIBPREFIX)smapi$(LIBSUFFIX)$(_LIB) \
+	  ../huskylib/make/$(LIBPREFIX)husky$(LIBSUFFIX)$(_LIB)
 
-all : mpost.exe
+READMEFILES= ./ChangeLog ./VERSION ./README
 
-all: mpost$(EXE)
+default:
+	@echo
+	@echo Run \'make programs\' to build static version of programs \($(PROGRAMS)\)
+	@echo
+	@echo Run \'make all\' to build all above
 
-%$(OBJ): %.c
-	$(CC) $(CFLAGS) $(CINCL) $*.c
+all:	programs
 
-mpost$(EXE): mpostp$(OBJ)
-	$(CC) $(LFLAGS) -o mpost$(EXE) mpostp$(OBJ) $(LIBS)
+programs: $(PROGRAMS)
 
-clean:
-	$(RM) *$(OBJ)
-	$(RM) *~
+%$(_OBJ): $(SRC_DIR)%$(_C)
+	@echo Compiling $<
+	@$(CC) $(CFLAGS) $(CDEFS) $(CINCL) $(OPTCFLAGS) $<
 
-distclean: clean
-	$(RM) mpost$(EXE)
+$(PROGRAMS): $(OBJS)
+	@echo Create $(PROGRAMS)
+	@$(CC) $(STRIP) $(CFLAGS) $(CDEFS) $(CINCL) $(EXENAMEFLAG) $@ $< $(LIBS)
+	@strip$(_EXE) $@
