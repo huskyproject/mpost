@@ -1,4 +1,3 @@
-
 SMAPIDIR=../smapi
 SMAPI=smapibcw
 TARGET=mpostnt.exe
