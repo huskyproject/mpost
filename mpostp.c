@@ -126,9 +126,9 @@
 #endif
 #endif
 
-#include "prog.h"               /* Squish API header */
-#include "alc.h"                /* Squish API header */
-#include "msgapi.h"             /* Squish API header */
+#include "smapi/prog.h"               /* Squish API header */
+#include "smapi/alc.h"                /* Squish API header */
+#include "smapi/msgapi.h"             /* Squish API header */
 
 #ifndef UNAME
 #ifdef OS2
