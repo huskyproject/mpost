@@ -9,19 +9,21 @@ endif
 
 CDEFS=-D$(OSTYPE) $(ADDCDEFS)
 
-LOPT= -L$(LIBDIR)
+LFLAGS=-L$(LIBDIR) -lsmapi
 
 all: mpost$(EXE)
 
 mpost$(EXE): mpostp.c
-	$(CC) $(COPT) $(CDEFS) $(LOPT) -o mpost$(EXE) mpostp.c -lsmapi
+	$(CC) $(COPT) $(CDEFS) $(LFLAGS) -o mpost$(EXE) mpostp.c
 
 clean:
-	-$(RM) *$(OBJ) *~ core
+	-$(RM) *$(OBJ)
+	-$(RM) *~
+	-$(RM) core
 
 distclean: clean
 	-$(RM) mpost$(EXE)
 
 install: mpost$(EXE)
-	install $(IBOPT) mpost$(EXE) $(BINDIR)
+	$(INSTALL) $(IBOPT) mpost$(EXE) $(BINDIR)
 
