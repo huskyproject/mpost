@@ -1,6 +1,6 @@
 
-INCDIR=/usr/local/include
-LIBDIR=/usr/local/lib
+INCDIR=..
+LIBDIR=../smapi
 SMAPI=smapiunix
 
 CC  =cc
