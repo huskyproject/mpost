@@ -1,6 +1,6 @@
 /*****************************************************************************
  +===========================================================================+
- | MsgPost/2 Version 1.23beta TE, Dec 1999   (C) 1992 by CodeLand Australia, |
+ | MsgPost/2 Version 2.0a-stable, Nov 2000   (C) 1992 by CodeLand Australia, |
  |                                                      All Rights Reserved. |
  | Written by Colin Wheat of Fidonet 3:690/613                               |
  | Compiled using C SET/2                                                    |
@@ -147,8 +147,8 @@
 #endif
 #endif
 
-#define VERSION     "1.22 TE"   /* MsgPost version   */
-#define SVERSON     "1.22"      /* Short version     */
+#define VERSION     "2.0a-stable"   /* MsgPost version   */
+#define SVERSON     "2.0a"      /* Short version     */
 #define MAX_BLOCK   16000       /* Maximum text size */
 #define MAX_LINE    10000       /* Maximum lines     */
 
@@ -228,7 +228,9 @@ static void  BuildCtrl (char *str, int *len, int num, int maxnum);
 static char *  AddrToStr (NADDR *addr);
 static unsigned long  HsecTime (void);
 static void  GetAddr (char *str, NADDR *addr);
+#ifdef __EMX__
 static void  AddSlash (char *str);
+#endif
 static void  StripSlash(char *str);
 static void  StripCr (char *str);
 static void  StrTrim (char *str);
@@ -249,7 +251,6 @@ int main (int argc, char *argv[])
     int areatyp;                /* Message area type            */
     struct _minf mi;            /* API structure                */
     MSG *ap;                    /* API area pointer             */
-    char dummy[80];
 
     
     printf("\nMPost/"UNAME" v" VERSION " - the Fidonet/Squish/Jam Message Base Writer"
@@ -294,10 +295,6 @@ int main (int argc, char *argv[])
     }
     if(areatyp==MSGTYPE_SDM&&msgtyp!=MSGTYP_MATX) areatyp|=MSGTYPE_ECHO;
 
-#ifdef LOCKDEBUG
-    printf ("next step: openarea\n");
-    gets(dummy);
-#endif    
 
     /* Open the message base */
     if((ap=MsgOpenArea((byte *)msgpath+(areatyp != MSGTYPE_SDM),
@@ -308,34 +305,15 @@ int main (int argc, char *argv[])
         Quit(5);
     }
 
-#ifdef LOCKDEBUG
-    printf ("next step: Lock\n");
-    gets(dummy);
-#endif    
 
     MsgLock(ap); /* Lock the base */
-
-#ifdef LOCKDEBUG
-    printf ("next step: Write\n");
-    gets(dummy);
-#endif    
 
     /* Write the message(s) */
     if((status=Process(ap))!=0) {
         printf("\n%cERROR: List file not found!\n\n",0x07);
     }
 
-#ifdef LOCKDEBUG
-    printf ("next step: unlock\n");
-    gets(dummy);
-#endif    
-
     MsgUnlock(ap); 
-
-#ifdef LOCKDEBUG
-    printf ("next step: close\n");
-    gets(dummy);
-#endif    
 
 
     MsgCloseArea(ap);    /* Unlock & close the base  */
@@ -1029,6 +1007,8 @@ static void  GetAddr (char *str, NADDR *addr)
 }
 
 
+#ifdef __EMX__
+
 /*
 ** AddSlash (char *str)
 ** Add trailing back slash
@@ -1049,6 +1029,8 @@ static void  AddSlash (char *str)
 #endif
     }
 }
+
+#endif
 
 
 /*
