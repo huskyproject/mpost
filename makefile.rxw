@@ -1,31 +1,9 @@
-# include Husky-Makefile-Config
-include ../huskymak.cfg
 
+SMAPIDIR=../smapi
 SMAPI=smapirxw
 TARGET=mpostnt.exe
 
-CC=gcc
-
-ifeq ($(DEBUG), 1)
-  COPT=-D__NT__ -Zwin32 -Zsys -g
-else
-  COPT=-D__NT__ -Zwin32 -Zsys -s
-endif
-
-LOPT=-L$(LIBDIR)
-
-all: $(TARGET)
+CC=gcc -D__NT__ -Zwin32 -Zsys
 
 $(TARGET): mpostp.c
-	$(CC) $(COPT) $(LOPT) -I$(INCDIR) -o $(TARGET) mpostp.c -l$(SMAPI)
-
-clean:
-	-cmd /c del *.obj
-	-cmd /c del *.bak
-
-distclean: clean
-	-cmd /c del *.exe
-
-install: $(TARGET)
-	cmd /c copy $(TARGET) $(BINDIR)
-
+	$(CC) -I$(SMAPIDIR) -o $(TARGET) mpostp.c -L$(SMAPIDIR) -l$(SMAPI)
