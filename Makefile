@@ -11,7 +11,7 @@ endif
 
 CDEFS=-D$(OSTYPE) $(ADDCDEFS)
 
-LIBS=-L$(LIBDIR) -lsmapi
+LIBS=-L$(LIBDIR) -lsmapi -lhusky
 
 all: mpost$(EXE)
 
