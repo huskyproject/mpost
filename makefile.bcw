@@ -1,0 +1,20 @@
+
+SMAPIDIR=../smapi
+SMAPI=smapibcw
+TARGET=mpostnt.exe
+
+CC=bcc32
+COPT=-D__NT__ -O2 -DWINNT
+
+default: $(TARGET)
+
+clean:
+	-del mpostp.obj
+
+distclean: clean
+	-del mpostnt.exe
+
+$(TARGET): mpostp.c
+	$(CC) $(COPT) -I$(SMAPIDIR) -I.. -e$(TARGET) mpostp.c ../smapi/smapibcw.lib
+
+

@@ -81,6 +81,7 @@
 #endif
 
 #elif defined(UNIX)
+#include <unistd.h>
 #elif defined(__NT__)
 #elif defined(__DJGPP__)
 #else
@@ -248,7 +249,9 @@ int main (int argc, char *argv[])
     int areatyp;                /* Message area type            */
     struct _minf mi;            /* API structure                */
     MSG *ap;                    /* API area pointer             */
+    char dummy[80];
 
+    
     printf("\nMPost/"UNAME" v" VERSION " - the Fidonet/Squish Message Base Writer"
            "\n   (C) Copyright 1992 by CodeLand, All Rights Reserved\n\n");
 
@@ -286,6 +289,9 @@ int main (int argc, char *argv[])
     areatyp=(*msgpath=='$'?MSGTYPE_SQUISH:MSGTYPE_SDM);
     if(areatyp==MSGTYPE_SDM&&msgtyp!=MSGTYP_MATX) areatyp|=MSGTYPE_ECHO;
 
+    printf ("next step: openarea\n");
+    gets(dummy);
+
     /* Open the message base */
     if((ap=MsgOpenArea((byte *)msgpath+(*msgpath=='$'),
                        MSGAREA_NORMAL | MSGAREA_CRIFNEC,areatyp)
@@ -295,14 +301,31 @@ int main (int argc, char *argv[])
         Quit(5);
     }
 
+    printf ("next step: Lock\n");
+    gets(dummy);
+
     MsgLock(ap); /* Lock the base */
+
+    printf ("next step: Write\n");
+    gets(dummy);
 
     /* Write the message(s) */
     if((status=Process(ap))!=0) {
         printf("\n%cERROR: List file not found!\n\n",0x07);
     }
 
-    MsgUnlock(ap); MsgCloseArea(ap);    /* Unlock & close the base  */
+    printf ("next step: unlock\n");
+    gets(dummy);
+
+    MsgUnlock(ap); 
+
+    printf ("next step: close\n");
+    gets(dummy);
+
+
+    MsgCloseArea(ap);    /* Unlock & close the base  */
+
+
     MsgCloseApi();                      /* Close the API            */
 
     if(killtxtflg) remove(txtpath);     /* Delete text source file  */

@@ -5,5 +5,13 @@ TARGET=mpostnt.exe
 
 CC=gcc -D__NT__ -Zwin32 -Zsys
 
+default: $(TARGET)
+
+clean:
+	-rm mpostp.o
+
+distclean: clean
+	-rm $(TARGET)
+
 $(TARGET): mpostp.c
-	$(CC) -I$(SMAPIDIR) -o $(TARGET) mpostp.c -L$(SMAPIDIR) -l$(SMAPI)
+	$(CC) -I.. -I$(SMAPIDIR) -o $(TARGET) mpostp.c -L$(SMAPIDIR) -l$(SMAPI)
