@@ -1,5 +1,7 @@
 MsgPost/2 Version 2.0, Oct 2000           (C) 1992 by CodeLand Australia
 ========================================================================
+Mpost do not supported after 2004 year, but you may continue developing.
+========================================================================
 
 Unix users, use    cat README | tr -d \\\r | less    to view this file.
 Source code maintainers, please leave the carriage returns in this file for
